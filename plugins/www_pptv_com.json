@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={}",
+        "phone_url" : "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={}",
         "email_url" : "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={}",
         "user_url" : "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={}",
         "method" : "GET",

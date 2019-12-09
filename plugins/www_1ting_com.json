@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://my.1ting.com/register/check?user_login={}",
+        "phone_url" : "http://my.1ting.com/register/check?user_login={}",
         "email_url" : "http://my.1ting.com/register/check?user_login={}",
         "user_url" : "http://my.1ting.com/register/check?user_login={}",
         "method" : "GET",

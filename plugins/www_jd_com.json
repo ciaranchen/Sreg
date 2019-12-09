@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "https://reg.jd.com/validateuser/isMobileEngaged?mobile={}",
+        "phone_url" : "https://reg.jd.com/validateuser/isMobileEngaged?mobile={}",
         "email_url" : "https://reg.jd.com/validateuser/isPinEngaged?pin={}",
         "user_url" : "https://reg.jd.com/validateuser/isPinEngaged?pin={}",
         "method" : "GET",

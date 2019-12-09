@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={}",
+        "phone_url" : "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={}",
         "email_url" : "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={}",
         "user_url" : "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={}",
         "method" : "GET",

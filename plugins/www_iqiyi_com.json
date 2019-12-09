@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://passport.iqiyi.com/apis/user/check_account.action",
+        "phone_url" : "http://passport.iqiyi.com/apis/user/check_account.action",
         "email_url" : "http://passport.iqiyi.com/apis/user/check_account.action",
         "user_url" : "http://passport.iqiyi.com/apis/user/check_account.action",
         "method" : "POST",

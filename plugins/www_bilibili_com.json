@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "",
+        "phone_url" : "",
         "email_url" : "",
         "user_url" : "https://account.bilibili.com/register/checkUname",
         "method" : "POST",

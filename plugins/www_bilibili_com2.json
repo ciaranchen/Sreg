@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "https://account.bilibili.com/register/checkTel",
+        "phone_url" : "https://account.bilibili.com/register/checkTel",
         "email_url" : "https://account.bilibili.com/register/checkTel",
         "user_url" : "https://account.bilibili.com/register/checkTel",
         "method" : "POST",

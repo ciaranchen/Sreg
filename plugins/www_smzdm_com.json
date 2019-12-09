@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://www.smzdm.com/user/register/ajax_check_user_email",
+        "phone_url" : "http://www.smzdm.com/user/register/ajax_check_user_email",
         "email_url" : "http://www.smzdm.com/user/register/ajax_check_user_email",
         "user_url" : "http://www.smzdm.com/user/register/ajax_check_user_email",
         "method" : "POST",

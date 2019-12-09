@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "https://zhuce.xunlei.com/register?jsoncallback=jsonp1426128051530&m=check_mail&mail={}",
+        "phone_url" : "https://zhuce.xunlei.com/register?jsoncallback=jsonp1426128051530&m=check_mail&mail={}",
         "email_url" : "https://zhuce.xunlei.com/register?jsoncallback=jsonp1426128051530&m=check_mail&mail={}",
         "user_url" : "https://zhuce.xunlei.com/register?jsoncallback=jsonp1426128051530&m=check_mail&mail={}",
         "method" : "GET",

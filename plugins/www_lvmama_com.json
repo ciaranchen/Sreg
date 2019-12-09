@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
+        "phone_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
         "email_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
         "user_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
         "method" : "POST",

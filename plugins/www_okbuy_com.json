@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://www.okbuy.com/members/register/checkUsername",
+        "phone_url" : "http://www.okbuy.com/members/register/checkUsername",
         "email_url" : "http://www.okbuy.com/members/register/checkUsername",
         "user_url" : "http://www.okbuy.com/members/register/checkUsername",
         "method" : "POST",

@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "",
+        "phone_url" : "",
         "email_url" : "https://passport.baidu.com/v2/?regmailcheck&token=4ec7c1177a45ff98f7376a6ff3b1a0c1&tpl=mn&apiver=v3&tt=1427085162611&email={}&callback=bd__cbs__pd8j8l",
         "user_url" : "",
         "method" : "GET",

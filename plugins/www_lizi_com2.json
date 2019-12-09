@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://www.lizi.com/user/check_ifexists",
+        "phone_url" : "http://www.lizi.com/user/check_ifexists",
         "email_url" : "http://www.lizi.com/user/check_ifexists",
         "user_url" : "http://www.lizi.com/user/check_ifexists",
         "method" : "POST",

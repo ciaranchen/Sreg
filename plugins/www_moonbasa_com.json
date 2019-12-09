@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "https://login.moonbasa.com/home/checkmobile",
+        "phone_url" : "https://login.moonbasa.com/home/checkmobile",
         "email_url" : "https://login.moonbasa.com/home/checkemail",
         "user_url" : "https://login.moonbasa.com/home/checkemail",
         "method" : "POST",

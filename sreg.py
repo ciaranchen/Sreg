@@ -14,7 +14,6 @@ from lxml import html
 from common.color import *
 from common.output import *
 from collections import OrderedDict
-from urllib.parse import quote
 
 
 class Sreg():
@@ -183,7 +182,7 @@ def main(Sreg=Sreg):
     jobs = []
     for plugin in plugins:
         if parser_argument.cellphone:
-            obj = Sreg(plugin, str(parser_argument.cellphone), "cellphone")
+            obj = Sreg(plugin, str(parser_argument.cellphone), "phone")
         elif parser_argument.user:
             obj = Sreg(plugin, str(parser_argument.user), "user")
         elif parser_argument.email:

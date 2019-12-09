@@ -11,7 +11,7 @@
     },
 
     "request" :{
-        "cellphone_url" : "http://www.letao.com/web_service/user_auth_ws.aspx?op=V2_check_auth_exist",
+        "phone_url" : "http://www.letao.com/web_service/user_auth_ws.aspx?op=V2_check_auth_exist",
         "email_url" : "http://www.letao.com/web_service/user_auth_ws.aspx?op=V2_check_auth_exist",
         "user_url" : "http://www.letao.com/web_service/user_auth_ws.aspx?op=V2_check_auth_exist",
         "method" : "POST",
