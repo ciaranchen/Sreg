@@ -1,7 +1,7 @@
 {
     "status": "ok",
     "type": [
-        "user"
+        "email"
     ],
     "information": {
         "author": "ciaranchen",
