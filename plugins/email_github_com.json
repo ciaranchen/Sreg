@@ -1,4 +1,8 @@
 {
+    "status": "ok",
+    "type": [
+        "user"
+    ],
     "information": {
         "author": "e0",
         "date": "2015/03/12",
@@ -26,7 +30,7 @@
             }
         }
     ],
-    "status": {
+    "judge": {
         "judge_yes_keyword": "Email is invalid or already taken"
     }
 }

@@ -1,9 +1,10 @@
-from sreg3 import Sreg
+from sreg import Sreg, main
 import json
 from lxml import html
 
 
-def main():
+
+def single_test():
     filename = "./plugins/email_github_com.json"
     sreg1 = Sreg(filename, "760218327@qq.com", "email")
     sreg1.check()
@@ -11,13 +12,30 @@ def main():
     # sreg2.check()
 
 
-def parse_github():
+def xpath_github():
+    # filename = "./plugins/username_github_com.json"
+    # sreg1 = Sreg(filename, "ciaranchen", "user")
+    # r = sreg1.check()
+    # print(r.text)
+    # tree = html.fromstring(r.text)
     with open('temp.html') as fp:
         tree = html.fromstring(fp.read())
-    a = tree.xpath('//auto-check[@src="/signup_check/email"][not(@class)]/@csrf')
+    a = tree.xpath('//auto-check[@src][1][not(@class)]/@csrf')
     print(a)
+
+class Sreg_debug(Sreg):
+    def check(self):
+        # By default, Sreg do not check `not sure` or `error` status plugins.
+        if "status" in self.content and self.content["status"] != 'debug':
+            return
+        if "type" in self.content and self.passport_type not in self.content["type"]:
+            return
+        if "before_check" in self.content:
+            for req_block in self.content["before_check"]:
+                self.before_check(req_block)
+        return self._check()
 
 
 if __name__ == '__main__':
-    main()
+    main(Sreg_debug)
     # parse_github()

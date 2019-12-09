@@ -1,4 +1,5 @@
 {
+    "status": "not sure",
     "information":{
         "author" : "e0",
         "date" : "2015/03/10",
@@ -19,7 +20,7 @@
         }
     },
 
-    "status":{
+    "judge":{
         "judge_yes_keyword" : "\"success\":true,\"message\":null,\"value\":1",
         "judge_no_keyword" : "\"success\":true,\"message\":null,\"value\":0",
         "profile_url" : ""

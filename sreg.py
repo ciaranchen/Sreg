@@ -20,7 +20,7 @@ class Sreg():
     def __init__(self, plugin, passport, passport_type):
         """
         plugin: plugins/*.json
-        passport: username, email, phone
+        passport: user, email, phone
         passport_type: passport type
         """
         self.plugin = plugin
@@ -56,10 +56,15 @@ class Sreg():
         return self.session.post(url, data=data, headers=headers, timeout=8, cookies=self.cookies)
 
     def check(self):
+        # By default, Sreg do not check `not sure` or `error` status plugins.
+        if "status" in self.content and (self.content["status"] == 'error' or self.content["status"] == 'not sure'):
+            return
+        if "type" in self.content and self.passport_type not in self.content["type"]:
+            return
         if "before_check" in self.content:
             for req_block in self.content["before_check"]:
                 self.before_check(req_block)
-        self._check()
+        return self._check()
 
     def before_check(self, block):
         method = block['method']
@@ -80,10 +85,8 @@ class Sreg():
         return res
 
     def _check(self):
-        if self.content["request"]["{0}_url".format(self.passport_type)]:
-            url = self.content["request"]["{0}_url".format(self.passport_type)]
-        else:
-            return
+        url = self.content["request"]["{0}_url".format(self.passport_type)]
+        url = url.format(**self.format_data)
 
         self.headers['Host'] = urllib.parse.urlparse(url).netloc
         self.headers['Referer'] = url
@@ -92,7 +95,6 @@ class Sreg():
                 self.headers[header_key] = self.content['headers'][header_key]
 
         if self.content['request']['method'] == "GET":
-            url = url.replace('{}', self.passport)
             try:
                 content = self.do_get(url).text
             except Exception as e:
@@ -109,10 +111,6 @@ class Sreg():
                 err = '\n[-] %s Error: %s\n' % (url, str(e))
                 print(inRed(err))
                 return
-        else:
-            print(
-                inRed('\n[*] {0} Error!\n'.format(self.content['request']['name'])))
-
         # print(content)
 
         if self.judge(content):
@@ -125,11 +123,9 @@ class Sreg():
                        self.passport, self.passport_type, icon, desc)
             print("[{0}] {1}".format(
                 category, ('%s (%s)' % (app_name, website))))
-        else:
-            pass
 
     def judge(self, content):
-        status = self.content['status']
+        status = self.content['judge']
         if 'judge_yes_keyword' in status and status['judge_yes_keyword'] in content:
             return True
         if 'judge_no_keyword' in status and status['judge_no_keyword'] in content:
@@ -137,7 +133,7 @@ class Sreg():
         return False
 
 
-def main():
+def main(Sreg=Sreg):
     parser = argparse.ArgumentParser(
         description="Check how many Platforms the User registered.")
     parser.add_argument("-u", action="store", dest="user")

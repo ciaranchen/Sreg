@@ -1,4 +1,5 @@
 {
+    "status": "not sure",
     "information":{
         "author" : "evi1m0",
         "date" : "2015/03/10",
@@ -19,7 +20,7 @@
         }
     },
 
-    "status":{
+    "judge":{
         "judge_yes_keyword":"被注册",
         "judge_no_keyword":"恭喜",
         "profile_url" : ""
