@@ -14,6 +14,7 @@ from lxml import html
 from common.color import *
 from common.output import *
 from collections import OrderedDict
+from urllib.parse import quote
 
 
 class Sreg():
@@ -86,6 +87,7 @@ class Sreg():
 
     def _check(self):
         url = self.content["request"]["{0}_url".format(self.passport_type)]
+        url = url.replace('{}', self.passport)
         url = url.format(**self.format_data)
 
         self.headers['Host'] = urllib.parse.urlparse(url).netloc
