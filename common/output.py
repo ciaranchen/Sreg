@@ -106,7 +106,7 @@ def output_finished(name):
     file_object = open(file_name, 'a')
     file_object.write(TEXT_END)
     file_object.close()
-    print '\n[+] Results the save path: %s' % file_name
+    print('\n[+] Results the save path: %s' % file_name)
 
 
 def output_add(category, app_name, website, name, passport_type, icon, description):
