@@ -124,6 +124,7 @@ class Sreg():
                        self.passport, self.passport_type, icon, desc)
             print("[{0}] {1}".format(
                 category, ('%s (%s)' % (app_name, website))))
+        return content
 
     def judge(self, content):
         status = self.content['judge']

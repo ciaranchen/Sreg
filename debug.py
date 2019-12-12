@@ -33,7 +33,9 @@ class Sreg_debug(Sreg):
         if "before_check" in self.content:
             for req_block in self.content["before_check"]:
                 self.before_check(req_block)
-        return self._check()
+        content = self._check()
+        print(content)
+        return content
 
 
 if __name__ == '__main__':
