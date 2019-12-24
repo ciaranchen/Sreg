@@ -33,8 +33,11 @@ class Sreg_debug(Sreg):
         if "before_check" in self.content:
             for req_block in self.content["before_check"]:
                 self.before_check(req_block)
+        print(self.content['information']['name'])
         content = self._check()
         print(content)
+        with open('temp.html', 'w') as fp:
+            fp.write(content)
         return content
 
 

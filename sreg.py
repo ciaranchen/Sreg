@@ -142,6 +142,7 @@ def main(Sreg=Sreg):
     parser.add_argument("-e", action="store", dest="email")
     parser.add_argument("-c", action="store", dest="cellphone")
     parser_argument = parser.parse_args()
+    # todo: list all plugin group by status
     banner = '''
      .d8888b.
     d88P  Y88b
