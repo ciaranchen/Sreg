@@ -1,0 +1,23 @@
+{
+    "status": "error",
+    "type": [
+        "user"
+    ],
+    "information": {
+        "author": "hel",
+        "create_date": "2015/03/09",
+        "name": "优酷",
+        "website": "http://www.youku.com",
+        "category": "名站",
+        "icon": "http://static.youku.com/index/img/header/yklogo_h.png",
+        "desc": "优酷是中国领先的视频分享网站，由古永锵在2006年6月21日创立。"
+    },
+    "request": {
+        "user_url": "http://login.youku.com/user/check?passport={}",
+        "method": "GET"
+    },
+    "judge": {
+        "judge_yes_keyword": "\"exists\":1",
+        "judge_no_keyword": "\"exists\":0"
+    }
+}

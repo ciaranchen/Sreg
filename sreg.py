@@ -105,7 +105,8 @@ class Sreg():
         elif self.content['request']['method'] == "POST":
             post_data = self.content['request']['post_fields']
             for k in post_data:
-                post_data[k] = post_data[k].format(**self.format_data)
+                if isinstance(post_data[k], str):
+                    post_data[k] = post_data[k].format(**self.format_data)
             try:
                 content = self.do_post(url, data=post_data).text
             except Exception as e:

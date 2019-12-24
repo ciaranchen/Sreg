@@ -1,5 +1,8 @@
 {
     "status": "error",
+    "type": [
+        "user"
+    ],
     "information": {
         "author": "evi1m0",
         "create_date": "2015/03/10",
@@ -10,15 +13,11 @@
         "desc": "51CTO传媒是专注于IT技术创新与发展的互联网媒体平台，由一批资深互联网专业人士创立于2005年。"
     },
     "request": {
-        "phone_url": "http://ucenter.51cto.com/checkemails.php?email={}",
-        "email_url": "http://ucenter.51cto.com/checkemails.php?email={}",
         "user_url": "http://ucenter.51cto.com/checkuser.php?username={}",
-        "method": "GET",
-        "post_fields": {}
+        "method": "GET"
     },
     "judge": {
         "judge_yes_keyword": "被注册",
-        "judge_no_keyword": "恭喜",
-        "profile_url": ""
+        "judge_no_keyword": "恭喜"
     }
 }
