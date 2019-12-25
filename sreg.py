@@ -17,13 +17,21 @@ from collections import OrderedDict
 
 
 class Sreg():
-    def __init__(self, plugin, passport, passport_type):
+    @staticmethod
+    def output_plugin(plugin):
+        print()
+
+    def output(self):
+        string = '- ' + self.content['information']['name']
+        if 'type' in self.content:
+            string += ' - ' + str(self.content['type'])
+        print('\t' + string)
+
+    def set_passport(self,  passport, passport_type):
         """
-        plugin: plugins/*.json
         passport: user, email, phone
         passport_type: passport type
         """
-        self.plugin = plugin
         self.passport = passport
         self.passport_type = passport_type
         self.session = requests.Session()
@@ -40,12 +48,24 @@ class Sreg():
             passport_type+"_passport": passport
         }
         self.cookies = {}
+
+    def __init__(self, plugin):
+        """
+        plugin: plugins/*.json
+        """
+        self.plugin = plugin
         # load plugin file
         with open(plugin) as f:
             try:
                 self.content = json.load(f)
             except Exception as e:
                 print(e, plugin)
+
+    def is_ok(self):
+        # By default, Sreg do not check `not sure` or `error` status plugins.
+        if "status" in self.content and self.content['status'] != 'ok':
+            return False
+        return True
 
     def do_get(self, url, headers={}):
         headers.update(self.headers)
@@ -56,11 +76,6 @@ class Sreg():
         return self.session.post(url, data=data, headers=headers, timeout=8, cookies=self.cookies)
 
     def check(self):
-        # By default, Sreg do not check `not sure` or `error` status plugins.
-        if "status" in self.content and (self.content["status"] == 'error' or self.content["status"] == 'not sure'):
-            return
-        if "type" in self.content and self.passport_type not in self.content["type"]:
-            return
         if "before_check" in self.content:
             for req_block in self.content["before_check"]:
                 self.before_check(req_block)
@@ -142,8 +157,10 @@ def main(Sreg=Sreg):
     parser.add_argument("-u", action="store", dest="user")
     parser.add_argument("-e", action="store", dest="email")
     parser.add_argument("-c", action="store", dest="cellphone")
+    parser.add_argument("-a", action="store_true", dest="list_all")
+    parser.add_argument("-l", "--list", action="store", dest="list_data")
     parser_argument = parser.parse_args()
-    # todo: list all plugin group by status
+
     banner = '''
      .d8888b.
     d88P  Y88b
@@ -157,46 +174,63 @@ def main(Sreg=Sreg):
                              Y8b d88P
                               "Y88P"
     '''
-    all_argument = [parser_argument.cellphone,
-                    parser_argument.user, parser_argument.email]
-    plugins = glob.glob("./plugins/*.json")
     print(inGreen(banner))
     print('[*] App: Search Registration')
     print('[*] Version: V1.2(20191209)')
     print('[*] Website: www.n0tr00t.com')
     print('[*] Maintainer: ciaranchen')
-    file_name = ""
+
+    # load plugins
+    allow_status = {'ok': inGreen, 'not_sure': inYellow, 'error': inRed}
+    plugins = glob.glob("./plugins/*.json")
+    objects = [Sreg(plugin) for plugin in plugins]
+
+    def list_plugins(type):
+        print(allow_status[type](type + ' type:'))
+        _ = [obj.output() for obj in objects if obj.content['status']
+             == type]
+
+    if parser_argument.list_all:
+        for status in allow_status:
+            list_plugins(status)
+        sys.exit(0)
+    if parser_argument.list_data in allow_status:
+        list_plugins(parser_argument.list_data)
+        sys.exit(0)
+
+    objects = [obj for obj in objects if obj.is_ok()]
+
+    all_argument = [parser_argument.cellphone,
+                    parser_argument.user, parser_argument.email]
     if all_argument.count(None) != 2:
         print('\nInput "-h" view the help information.')
         sys.exit(0)
     if parser_argument.cellphone:
         print(inYellow('\n[+] Phone Checking: %s\n') %
               parser_argument.cellphone)
+        passport, passport_type = str(parser_argument.cellphone), "phone"
         file_name = "cellphone_" + str(parser_argument.cellphone)
         output_init(file_name, "Phone: ", str(parser_argument.cellphone))
     elif parser_argument.user:
         print(inYellow('\n[+] Username Checking: %s\n') % parser_argument.user)
+        passport, passport_type = str(parser_argument.user), "user"
         file_name = "user_" + str(parser_argument.user)
         output_init(file_name, "UserName: ", str(parser_argument.user))
     elif parser_argument.email:
         print(inYellow('\n[+] Email Checking: %s\n') % parser_argument.email)
+        passport, passport_type = str(parser_argument.email), "email"
         file_name = "email_" + str(parser_argument.email)
         output_init(file_name, "E-mail: ", str(parser_argument.email))
-    jobs = []
-    for plugin in plugins:
-        if parser_argument.cellphone:
-            obj = Sreg(plugin, str(parser_argument.cellphone), "phone")
-        elif parser_argument.user:
-            obj = Sreg(plugin, str(parser_argument.user), "user")
-        elif parser_argument.email:
-            obj = Sreg(plugin, str(parser_argument.email), "email")
-        p = multiprocessing.Process(target=obj.check)
-        p.start()
-        jobs.append(p)
+
+    _ = [obj.set_passport(passport, passport_type) for obj in objects]
+    jobs = [multiprocessing.Process(target=obj.check)
+            for obj in objects if passport_type in obj.content['type']]
+    for job in jobs:
+        job.start()
     while sum([i.is_alive() for i in jobs]) != 0:
         pass
-    for i in jobs:
-        i.join()
+    for job in jobs:
+        job.join()
     output_finished(file_name)
 
 
