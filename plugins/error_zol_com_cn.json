@@ -21,7 +21,6 @@
     },
     "judge": {
         "judge_yes_keyword": "{\"info\":\"error\",",
-        "judge_no_keyword": "{\"info\":\"ok\",",
-        "profile_url": ""
+        "judge_no_keyword": "{\"info\":\"ok\","
     }
 }

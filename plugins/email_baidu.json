@@ -18,7 +18,6 @@
     },
     "judge": {
         "judge_yes_keyword": "{\"errInfo\":{ \"no\": \"110023\" }",
-        "judge_no_keyword": "{\"errInfo\":{ \"no\": \"0\" }",
-        "profile_url": ""
+        "judge_no_keyword": "{\"errInfo\":{ \"no\": \"0\" }"
     }
 }

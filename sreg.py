@@ -17,10 +17,6 @@ from collections import OrderedDict
 
 
 class Sreg():
-    @staticmethod
-    def output_plugin(plugin):
-        print()
-
     def output(self):
         string = '- ' + self.content['information']['name']
         if 'type' in self.content:
@@ -61,6 +57,7 @@ class Sreg():
             except Exception as e:
                 print(e, plugin)
 
+    # filter plugin status
     def is_ok(self):
         # By default, Sreg do not check `not sure` or `error` status plugins.
         if "status" in self.content and self.content['status'] != 'ok':
@@ -181,7 +178,7 @@ def main(Sreg=Sreg):
     print('[*] Maintainer: ciaranchen')
 
     # load plugins
-    allow_status = {'ok': inGreen, 'not_sure': inYellow, 'error': inRed}
+    allow_status = {'ok': inGreen, 'not_sure': inYellow, 'error': inRed, 'debug': inYellow}
     plugins = glob.glob("./plugins/*.json")
     objects = [Sreg(plugin) for plugin in plugins]
 
@@ -223,6 +220,8 @@ def main(Sreg=Sreg):
         output_init(file_name, "E-mail: ", str(parser_argument.email))
 
     _ = [obj.set_passport(passport, passport_type) for obj in objects]
+    # filter plugin type
+    # _ = [obj.output() for obj in objects if passport_type in obj.content['type']]
     jobs = [multiprocessing.Process(target=obj.check)
             for obj in objects if passport_type in obj.content['type']]
     for job in jobs:
