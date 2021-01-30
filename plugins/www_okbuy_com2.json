@@ -22,8 +22,7 @@
 
     "judge":{
         "judge_yes_keyword":"false",
-        "judge_no_keyword":"true",
-        "profile_url" : ""
+        "judge_no_keyword":"true"
     },
 
     "headers":{

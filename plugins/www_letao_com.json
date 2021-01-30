@@ -22,7 +22,6 @@
 
     "judge":{
         "judge_yes_keyword" : "[\"ERROR\"",
-        "judge_no_keyword" : "[\"SUCCESS\"",
-        "profile_url":""
+        "judge_no_keyword" : "[\"SUCCESS\""
     }
 }

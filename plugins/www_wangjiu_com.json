@@ -22,7 +22,6 @@
 
     "judge":{
         "judge_yes_keyword" : "\"result\":[{\"COUNT\":\"1\"}]",
-        "judge_no_keyword" : "\"result\":[{\"COUNT\":\"0\"}]",
-        "profile_url":""
+        "judge_no_keyword" : "\"result\":[{\"COUNT\":\"0\"}]"
     }
 }

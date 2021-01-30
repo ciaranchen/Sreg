@@ -23,7 +23,6 @@
 
     "judge":{
         "judge_yes_keyword" : "\"status\":0",
-        "judge_no_keyword" : "\"status\":1",
-        "profile_url":""
+        "judge_no_keyword" : "\"status\":1"
     }
 }

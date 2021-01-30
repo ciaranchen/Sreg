@@ -22,7 +22,6 @@
 
     "judge":{
         "judge_yes_keyword" : "has_in",
-        "judge_no_keyword" : "ok",
-        "profile_url":""
+        "judge_no_keyword" : "ok"
     }
 }
