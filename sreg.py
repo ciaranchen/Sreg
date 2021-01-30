@@ -212,8 +212,12 @@ def main(Sreg=Sreg):
         passport, passport_type = str(parser_argument.email), "email"
     encoder_obj = OutputEncoder(passport_type, passport)
 
+<<<<<<< HEAD
     for obj in objects:
         obj.set_encoder(encoder_obj)
+=======
+    _ = [obj.set_passport(passport, passport_type) for obj in objects]
+>>>>>>> f709cfb35ea026db81740af5ac2beb3b60bed4f5
     # filter plugin type
     # _ = [obj.output() for obj in objects if passport_type in obj.content['type']]
     jobs = [multiprocessing.Process(target=obj.check)
