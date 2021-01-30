@@ -46,3 +46,6 @@ docs/_build/
 
 .vscode
 temp.html
+reports/*.html
+reports/*.json
+venv

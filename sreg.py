@@ -12,28 +12,21 @@ import argparse
 import multiprocessing
 from lxml import html
 from common.color import *
-from common.output import *
+from common.output import SimpleEncoder as OutputEncoder
 from collections import OrderedDict
 
 
 class Sreg():
-    @staticmethod
-    def output_plugin(plugin):
-        print()
-
     def output(self):
         string = '- ' + self.content['information']['name']
         if 'type' in self.content:
             string += ' - ' + str(self.content['type'])
         print('\t' + string)
 
-    def set_passport(self,  passport, passport_type):
-        """
-        passport: user, email, phone
-        passport_type: passport type
-        """
-        self.passport = passport
-        self.passport_type = passport_type
+    def set_encoder(self, encoder):
+        self.encoder = encoder
+        self.passport = encoder.passport
+        self.passport_type = encoder.passport_type
         self.session = requests.Session()
         self.headers = OrderedDict({
             'Connection': 'closed',
@@ -44,8 +37,8 @@ class Sreg():
             'Accept': '*/*'
         })
         self.format_data = {
-            'passport': passport,
-            passport_type+"_passport": passport
+            'passport': self.passport,
+            self.passport_type+"_passport": self.passport
         }
         self.cookies = {}
 
@@ -61,6 +54,7 @@ class Sreg():
             except Exception as e:
                 print(e, plugin)
 
+    # filter plugin status
     def is_ok(self):
         # By default, Sreg do not check `not sure` or `error` status plugins.
         if "status" in self.content and self.content['status'] != 'ok':
@@ -130,14 +124,15 @@ class Sreg():
                 return
         # print(content)
 
-        if self.judge(content):
-            app_name = self.content['information']['name']
-            category = self.content["information"]["category"]
-            website = self.content["information"]["website"]
-            icon = self.content['information']['icon']
-            desc = self.content['information']['desc']
-            output_add(category, app_name, website,
-                       self.passport, self.passport_type, icon, desc)
+        judge = self.judge(content)
+        app_name = self.content['information']['name']
+        category = self.content["information"]["category"]
+        website = self.content["information"]["website"]
+        icon = self.content['information']['icon']
+        desc = self.content['information']['desc']
+        self.encoder.output_add(category, app_name, website, icon, desc, judge)
+
+        if judge:
             print("[{0}] {1}".format(
                 category, ('%s (%s)' % (app_name, website))))
         return content
@@ -181,7 +176,7 @@ def main(Sreg=Sreg):
     print('[*] Maintainer: ciaranchen')
 
     # load plugins
-    allow_status = {'ok': inGreen, 'not_sure': inYellow, 'error': inRed}
+    allow_status = {'ok': inGreen, 'not_sure': inYellow, 'error': inRed, 'debug': inYellow}
     plugins = glob.glob("./plugins/*.json")
     objects = [Sreg(plugin) for plugin in plugins]
 
@@ -209,29 +204,25 @@ def main(Sreg=Sreg):
         print(inYellow('\n[+] Phone Checking: %s\n') %
               parser_argument.cellphone)
         passport, passport_type = str(parser_argument.cellphone), "phone"
-        file_name = "cellphone_" + str(parser_argument.cellphone)
-        output_init(file_name, "Phone: ", str(parser_argument.cellphone))
     elif parser_argument.user:
         print(inYellow('\n[+] Username Checking: %s\n') % parser_argument.user)
         passport, passport_type = str(parser_argument.user), "user"
-        file_name = "user_" + str(parser_argument.user)
-        output_init(file_name, "UserName: ", str(parser_argument.user))
     elif parser_argument.email:
         print(inYellow('\n[+] Email Checking: %s\n') % parser_argument.email)
         passport, passport_type = str(parser_argument.email), "email"
-        file_name = "email_" + str(parser_argument.email)
-        output_init(file_name, "E-mail: ", str(parser_argument.email))
+    encoder_obj = OutputEncoder(passport_type, passport)
 
-    _ = [obj.set_passport(passport, passport_type) for obj in objects]
+    for obj in objects:
+        obj.set_encoder(encoder_obj)
+    # filter plugin type
+    # _ = [obj.output() for obj in objects if passport_type in obj.content['type']]
     jobs = [multiprocessing.Process(target=obj.check)
             for obj in objects if passport_type in obj.content['type']]
     for job in jobs:
         job.start()
-    while sum([i.is_alive() for i in jobs]) != 0:
-        pass
     for job in jobs:
         job.join()
-    output_finished(file_name)
+    encoder_obj.output_finished()
 
 
 if __name__ == '__main__':
