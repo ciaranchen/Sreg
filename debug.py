@@ -54,9 +54,12 @@ class Sreg_Debug(Sreg):
             # print(plugs[p.meta_info.name])
 
         for p in plugs:
-            if p not in repeat:
-                continue
             filename = plugs[p]['information']['website'].strip('http://').strip('https://').strip('/').replace('.', '_') + '.json'
+            p_obj = [pi for pi in plugins if pi.meta_info.name == p][0]
+            print(os.path.basename(p_obj.filename))
+            # continue
+            if os.path.basename(p_obj.filename) == filename:
+                continue
             filepath = os.path.join(plug_path, filename)
             with open(filepath, 'w', encoding='utf8') as fp:
                 json.dump(plugs[p], fp, indent=4, ensure_ascii=False)

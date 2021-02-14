@@ -1,0 +1,28 @@
+{
+    "status": "ok",
+    "information": {
+        "author": "evi1m0",
+        "create_date": "2015/03/23",
+        "update_date": "2019/12/09",
+        "name": "百度",
+        "website": "http://www.baidu.com/",
+        "category": "工具",
+        "icon": "https://www.baidu.com/img/bdlogo.png",
+        "desc": "百度（Nasdaq：BIDU）是中国最大的中文搜索引擎、最大的中文网站。"
+    },
+    "phone": {
+        "url": "https://passport.baidu.com/v2/?regphonecheck&phone={passport}",
+        "method": "GET",
+        "judge": {
+            "judge_yes_keyword": "{\"errno\":130020,",
+            "judge_no_keyword": "{\"errno\":110000,"
+        }
+    },
+    "user": {
+        "url": "https://passport.baidu.com/v2/?regnamesugg&tpl=mn&subpro=&apiver=v3&username={user_passport}&traceid=&time=&alg=v2&callback=bd__cbs",
+        "method": "GET",
+        "judge": {
+            "judge_yes_keyword": "\"userExsit\": \"1\""
+        }
+    }
+}

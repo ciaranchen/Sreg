@@ -117,10 +117,10 @@ class JsonPlugin(Plugin):
         if "before_check" in self.content:
             export = self.before_check(self.content['before_check'], passport_type, passport)
             if export:
-                    format_data.update(export)
+                format_data.update(export)
         resp = self.do_check(url=self.content['request'][passport_type + '_url'].format(**format_data), request=self.content['request'], headers=self.content.get('headers', None), data=format_data)
+        # print(resp)
         return self.judge(resp, self.content['judge'])
-
 
 
     def before_check(self, json_config, passport_type, passport):
@@ -161,12 +161,13 @@ class JsonPlugin(Plugin):
         return resp
 
 
-    def judge(self, resp, judge_status):
-        if 'judge_yes_keyword' in judge_status and judge_status['judge_yes_keyword'] in resp:
+    def judge(self, resp, judge_block):
+        if 'judge_yes_keyword' in judge_block and judge_block['judge_yes_keyword'] in resp:
             return True
-        if 'judge_no_keyword' in judge_status and judge_status['judge_no_keyword'] in resp:
+        if 'judge_no_keyword' in judge_block and judge_block['judge_no_keyword'] in resp:
             return False
-        return False
+        if 'judge_yes_keyword' in judge_block and 'judge_no_keyword' in judge_block:
+            raise RuntimeError('Plugin check failed.')
 
 
 class JsonPlugin2(JsonPlugin):
@@ -192,7 +193,6 @@ class JsonPlugin2(JsonPlugin):
 
             if "before_check" in self.content[passport_type]:
                 export = self.before_check(self.content[passport_type]['before_check'], passport_type, passport)
-                print(export)
                 if export:
                     format_data.update(export)
             resp = self.do_check(url=self.content[passport_type]['url'].format(**format_data), request=self.content[passport_type], headers=self.content[passport_type].get('headers', None), data=format_data)

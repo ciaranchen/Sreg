@@ -1,8 +1,5 @@
 {
     "status": "error",
-    "type": [
-        "phone"
-    ],
     "information": {
         "author": "e0",
         "create_date": "2015/03/10",
@@ -12,12 +9,12 @@
         "icon": "http://pic.baike.soso.com/p/20140212/20140212145141-520603404.jpg",
         "desc": "艺龙旅行网 (NASDAQ: LONG)是中国领先的在线住宿服务提供商之一,致力于为消费者打造专注专业、物超所值、智能便捷的住宿预订平台"
     },
-    "request": {
-        "phone_url": "https://secure.elong.com/passport/isajax/Register/ValidateMobileOrEmail?mobile={passport}",
-        "method": "GET"
-    },
-    "judge": {
-        "judge_yes_keyword": "\"success\":true,\"message\":null,\"value\":1",
-        "judge_no_keyword": "\"success\":true,\"message\":null,\"value\":0"
+    "phone": {
+        "url": "https://secure.elong.com/passport/isajax/Register/ValidateMobileOrEmail?mobile={passport}",
+        "method": "GET",
+        "judge": {
+            "judge_yes_keyword": "\"success\":true,\"message\":null,\"value\":1",
+            "judge_no_keyword": "\"success\":true,\"message\":null,\"value\":0"
+        }
     }
 }

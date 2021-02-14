@@ -1,9 +1,7 @@
 {
-    "status": "ok",
+    "status": "not_sure",
     "type": [
-        "user",
-        "email",
-        "phone"
+        "user"
     ],
     "information": {
         "author": "e0",
@@ -16,8 +14,6 @@
         "desc": "一听音乐网是中国最大的在线音乐网站,提供免费歌曲在线试听、下载。"
     },
     "request": {
-        "phone_url": "http://my.1ting.com/register/check?user_login={passport}",
-        "email_url": "http://my.1ting.com/register/check?user_login={passport}",
         "user_url": "http://my.1ting.com/register/check?user_login={passport}",
         "method": "GET"
     },
