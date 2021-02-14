@@ -11,9 +11,9 @@
     },
 
     "request" :{
-        "phone_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={}",
-        "email_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={}",
-        "user_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={}",
+        "phone_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={passport}",
+        "email_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={passport}",
+        "user_url" : "http://usercenter.wangjiu.com/api/web/query/isExist.jsonp?callback=&user_name={passport}",
         "method" : "GET",
         "post_fields":{
 

@@ -13,7 +13,7 @@
         "desc": "360由周鸿祎创立于2005年9月，主营以360杀毒为代表的免费网络安全平台，同时拥有问答等独立业务。"
     },
     "request": {
-        "phone_url": "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={}",
+        "phone_url": "http://login.360.cn/?&src=pcw_home&from=pcw_home&charset=UTF-8&requestScema=http&o=User&m=checkmobile&mobile={passport}",
         "method": "GET"
     },
     "judge": {

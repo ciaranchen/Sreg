@@ -14,7 +14,7 @@
         "desc": "58同城（www.58.com）2005年12月创立于北京，为用户提供“本地、免费、真实、高效”的生活服务。"
     },
     "request": {
-        "email_url": "http://passport.58.com/ajax/checkemail?id=6266&email={}",
+        "email_url": "http://passport.58.com/ajax/checkemail?id=6266&email={passport}",
         "method": "GET"
     },
     "judge": {

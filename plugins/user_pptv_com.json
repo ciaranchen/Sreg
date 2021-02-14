@@ -14,7 +14,7 @@
         "desc": "PPTV聚力-始终和你同一频道,汇聚最清晰,最流畅的网络各类最新热门直播、点播视频。"
     },
     "request": {
-        "user_url": "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={}",
+        "user_url": "http://api.passport.pptv.com/v3/query/loginname_exist.do?logintype=username&username={passport}",
         "method": "GET"
     },
     "judge": {

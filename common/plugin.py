@@ -23,6 +23,11 @@ class PluginStatus(Enum):
         return ['ok', 'error', 'not_sure', 'debug'][x.value - 1]
 
 
+    @staticmethod
+    def get_all_state():
+        return [PluginStatus.OK, PluginStatus.ERROR, PluginStatus.DEBUG, PluginStatus.NOTSURE]
+
+
 class MetaPlugin(object):
     """
     Plugin 应有的元数据
@@ -103,10 +108,25 @@ class JsonPlugin(Plugin):
         return res
 
 
-    def before_check(self, passport_type, json_config):
+    def check(self, _type, passport):
+        passport_type = PassportType.get_string(_type)
+        format_data = {
+            'passport': passport,
+            passport_type+"_passport": passport
+        }
+        if "before_check" in self.content:
+            export = self.before_check(self.content['before_check'], passport_type, passport)
+            if export:
+                    format_data.update(export)
+        resp = self.do_check(url=self.content['request'][passport_type + '_url'].format(**format_data), request=self.content['request'], headers=self.content.get('headers', None), data=format_data)
+        return self.judge(resp, self.content['judge'])
+
+
+
+    def before_check(self, json_config, passport_type, passport):
         for block in json_config:
             method = block['method']
-            url = block["{0}_url".format(passport_type)]
+            url = block["url"]
             if method == 'GET':
                 res = self.do_get(url)
                 self.cookies = res.cookies
@@ -116,51 +136,64 @@ class JsonPlugin(Plugin):
 
             if 'export' in block:
                 tree = html.fromstring(res.text)
-                for ex in block['export']:
-                    self.format_data[ex] = tree.xpath(block['export'][ex])
+                return {ex: tree.xpath(block['export'][ex]) for ex in block['export']}
+
+
+    def do_check(self, url, headers, request, data):
+        req_headers = self.headers.copy()
+        req_headers.update({
+            'Host': urllib.parse.urlparse(url).netloc,
+            'Referer': url
+        })
+
+        if headers:
+            req_headers.update(headers)
+
+        # do a check
+        if request['method'] == "GET":
+            resp = self.do_get(url).text
+        elif request['method'] == "POST":
+            post_data = request['post_fields']
+            for k in post_data:
+                if isinstance(post_data[k], str):
+                    post_data[k] = post_data[k].format(**data)
+            resp = self.do_post(url, data=post_data).text
+        return resp
+
+
+    def judge(self, resp, judge_status):
+        if 'judge_yes_keyword' in judge_status and judge_status['judge_yes_keyword'] in resp:
+            return True
+        if 'judge_no_keyword' in judge_status and judge_status['judge_no_keyword'] in resp:
+            return False
+        return False
+
+
+class JsonPlugin2(JsonPlugin):
+    def get_types(self):
+        if 'request' in self.content:
+            assert 'request' in self.content
+            assert 'judge' in self.content
+            return super().get_types()
+        else:
+            return [PassportType.get_passport_type(k) for k in self.content if PassportType.get_passport_type(k) in PassportType.get_all_types()]
 
 
     def check(self, _type, passport):
-        passport_type = PassportType.get_string(_type)
-        format_data = {
-            'passport': passport,
-            passport_type+"_passport": passport
-        }
-        if "before_check" in self.content:
-            self.before_check(passport_type, self.content['before_check'])
-            for req_block in self.content["before_check"]:
-                self.before_check(req_block)
+        if 'request' in self.content:
+            return super().check(_type, passport)
+        else:
+            passport_type = PassportType.get_string(_type)
+            format_data = {
+                'passport': passport,
+                passport_type+"_passport": passport
+            }
+            assert passport_type in self.content
 
-        
-        url = self.content["request"]["{0}_url".format(passport_type)]
-        url = url.replace('{}', passport)
-        url = url.format(**format_data)
-
-        self.headers['Host'] = urllib.parse.urlparse(url).netloc
-        self.headers['Referer'] = url
-
-        if "headers" in self.content:
-            for header_key in list(self.content['headers'].keys()):
-                self.headers[header_key] = self.content['headers'][header_key]
-
-        # do a check
-        if self.content['request']['method'] == "GET":
-            resp = self.do_get(url).text
-        elif self.content['request']['method'] == "POST":
-            post_data = self.content['request']['post_fields']
-            for k in post_data:
-                if isinstance(post_data[k], str):
-                    post_data[k] = post_data[k].format(**format_data)
-            resp = self.do_post(url, data=post_data).text
-
-        judge = self.judge(resp)
-        return judge
-
-
-    def judge(self, content):
-        status = self.content['judge']
-        if 'judge_yes_keyword' in status and status['judge_yes_keyword'] in content:
-            return True
-        if 'judge_no_keyword' in status and status['judge_no_keyword'] in content:
-            return False
-        return False
+            if "before_check" in self.content[passport_type]:
+                export = self.before_check(self.content[passport_type]['before_check'], passport_type, passport)
+                print(export)
+                if export:
+                    format_data.update(export)
+            resp = self.do_check(url=self.content[passport_type]['url'].format(**format_data), request=self.content[passport_type], headers=self.content[passport_type].get('headers', None), data=format_data)
+            return self.judge(resp, self.content[passport_type]['judge'])

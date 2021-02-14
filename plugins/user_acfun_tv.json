@@ -13,7 +13,7 @@
         "desc": "AcFun是一家弹幕视频网站，致力于为每一个人带来欢乐。"
     },
     "request": {
-        "user_url": "http://www.acfun.cn/username_unique.aspx?username={}",
+        "user_url": "http://www.acfun.cn/username_unique.aspx?username={passport}",
         "method": "GET"
     },
     "judge": {

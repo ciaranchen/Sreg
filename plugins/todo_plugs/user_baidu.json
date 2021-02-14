@@ -1,12 +1,11 @@
 {
     "status": "ok",
     "type": [
-        "phone"
+        "user"
     ],
     "information": {
-        "author": "evi1m0",
-        "create_date": "2015/03/23",
-        "update_date": "2019/12/09",
+        "author": "ciaranchen",
+        "create_date": "2019/12/10",
         "name": "百度",
         "website": "http://www.baidu.com/",
         "category": "工具",
@@ -14,11 +13,10 @@
         "desc": "百度（Nasdaq：BIDU）是中国最大的中文搜索引擎、最大的中文网站。"
     },
     "request": {
-        "phone_url": "https://passport.baidu.com/v2/?regphonecheck&phone={}",
+        "user_url": "https://passport.baidu.com/v2/?regnamesugg&tpl=mn&subpro=&apiver=v3&username={user_passport}&traceid=&time=&alg=v2&callback=bd__cbs",
         "method": "GET"
     },
     "judge": {
-        "judge_yes_keyword": "{\"errno\":130020,",
-        "judge_no_keyword": "{\"errno\":110000,"
+        "judge_yes_keyword": "\"userExsit\": \"1\""
     }
 }

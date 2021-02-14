@@ -5,9 +5,9 @@
 
 import sys, os
 import argparse
-# import multiprocessing
+import threading
 from common.passport import PassportEncoder, PassportType
-from common.plugin import JsonPlugin, PluginStatus
+from common.plugin import JsonPlugin2 as JsonPlugin, PluginStatus
 from common.color import *
 from common.output import SimpleEncoder as OutputEncoder
 
@@ -32,14 +32,15 @@ class Sreg(object):
         print(inGreen(banner))
         print('[*] App: Search Registration')
         print('[*] Version: V1.2(20191209)')
-        print('[*] Website: www.n0tr00t.com')
-        print('[*] Maintainer: ciaranchen')
+        print('[*] Maintainer: ciaranchen\n')
 
 
-    def __init__(self):
-        self.welcome_message()
+    def __init__(self, silence=False):
+        if not silence:
+            self.welcome_message()
         self.base_dir = os.path.dirname(__file__)
         self.plugin_path = os.path.join(self.base_dir, "plugins")
+        self.res = []
 
 
     def set_passports(self, passports):
@@ -67,7 +68,6 @@ class Sreg(object):
         return [p for p in self.plugins if _type in p.get_types()]
 
 
-    # @generate_report
     def run_checks(self):
         res = {}
         for t, p in self.passports:
@@ -84,6 +84,46 @@ class Sreg(object):
         return res
 
 
+    def single_check(self, plug, t, p):
+        try:
+            res = plug.check(t, p)
+            if res:
+                print(inGreen('[+] %s: %s Registered' % (plug.meta_info.name, p)))
+            else:
+                print('[+] %s: %s ' % (plug, p) + inYellow('Not') + ' Registered')
+            self.res.append((plug, t, p, res))
+            return res
+        except Exception as e:
+            err = '[-] %s(%s) Error: %s\n' % (plug, p, str(e))
+            print(inRed(err))
+            return None
+
+
+    def check_parallel(self):
+        threads = []
+        for t, p in self.passports:
+            key = p
+            plugs = self.select_plugins(t)
+            for plug in plugs:
+                threads.append(threading.Thread(target=self.single_check, args=(plug, t, p)))
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join() # 等待所有线程执行到此处再继续往下执行
+
+
+    @staticmethod
+    def list_by_categories(with_status=False):
+        sreg = Sreg(silence=True)
+        plugins = sreg.load_plugins(sreg.plugin_path, types=PassportType.get_all_types(), allow_status=PluginStatus.get_all_state())
+        all_categories = set([p.meta_info.category for p in plugins])
+        for c in all_categories:
+            print('\n' + c + ':')
+            for p in [p for p in plugins if p.meta_info.category == c]:
+                print(p)
+        # print(all_categories)
+
+
 def main(Sreg=Sreg):
     parser = argparse.ArgumentParser(
         description="Check how many Platforms the User registered.")
@@ -91,16 +131,21 @@ def main(Sreg=Sreg):
     parser.add_argument("-e", action="store", dest="email")
     parser.add_argument("-c", action="store", dest="cellphone")
     parser.add_argument("-l", "--list", action="store_true", dest="list_data")
+    parser.add_argument('--list-all', action="store_true", dest="list_all")
     parser_argument = parser.parse_args()
 
-    sreg = Sreg()
+    if parser_argument.list_all:
+        Sreg.list_by_categories()
+        sys.exit(0)
 
     all_argument = [parser_argument.cellphone,
                     parser_argument.user, parser_argument.email]
     if all_argument.count(None) != 2:
         print('\nInput "-h" view the help information.')
         sys.exit(0)
-    
+
+    sreg = Sreg()
+
     passports = PassportEncoder()
     passports.add_passport(PassportType.USER, parser_argument.user)
     passports.add_passport(PassportType.PHONE, parser_argument.cellphone)
@@ -110,10 +155,12 @@ def main(Sreg=Sreg):
 
     if parser_argument.list_data:
         for p in sreg.plugins:
-            print('- ' + p)
+            print('- ' + str(p))
         sys.exit(0)
 
-    print(sreg.run_checks())
+    # print(sreg.run_checks())
+    sreg.check_parallel()
+    # TODO: generate check report.
 
 
 if __name__ == '__main__':

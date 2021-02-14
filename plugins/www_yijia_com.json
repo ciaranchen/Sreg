@@ -9,11 +9,10 @@
         "icon" : "http://www.yijia.com/static/images/new/new_logo.jpg",
         "desc" : "亿家网提供高品质的租住服务 400-600-2381"
     },
-
     "request" :{
-        "phone_url" : "http://www.yijia.com/login/check_reg_phone/tel/{}",
-        "email_url" : "http://www.yijia.com/login/check_reg_phone/tel/{}",
-        "user_url" : "http://www.yijia.com/login/check_reg_phone/tel/{}",
+        "phone_url" : "http://www.yijia.com/login/check_reg_phone/tel/{passport}",
+        "email_url" : "http://www.yijia.com/login/check_reg_phone/tel/{passport}",
+        "user_url" : "http://www.yijia.com/login/check_reg_phone/tel/{passport}",
         "method" : "GET",
         "post_fields":{
 

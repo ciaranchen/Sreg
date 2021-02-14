@@ -11,9 +11,9 @@
     },
 
     "request" :{
-        "phone_url" : "http://www.docin.com/vdwrutil/checkLoginEmail.do?loginEmail={}",
-        "email_url" : "http://www.docin.com/vdwrutil/checkLoginEmail.do?loginEmail={}",
-        "user_url" : "http://www.docin.com/jsp_cn/jquery/login/reg_check.jsp?flag=name&loginName={}",
+        "phone_url" : "http://www.docin.com/vdwrutil/checkLoginEmail.do?loginEmail={passport}",
+        "email_url" : "http://www.docin.com/vdwrutil/checkLoginEmail.do?loginEmail={passport}",
+        "user_url" : "http://www.docin.com/jsp_cn/jquery/login/reg_check.jsp?flag=name&loginName={passport}",
         "method" : "GET",
         "post_fields":{
 

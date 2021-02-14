@@ -13,7 +13,7 @@
         "desc": "百合网--实名婚恋网开创者，实名认证，婚恋征婚交友更诚信"
     },
     "request": {
-        "email_url": "http://my.baihe.com/register/emailCheckForXs?email={}",
+        "email_url": "http://my.baihe.com/register/emailCheckForXs?email={passport}",
         "method": "GET"
     },
     "judge": {

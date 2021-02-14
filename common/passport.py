@@ -13,7 +13,12 @@ class PassportType(Enum):
 
     @staticmethod
     def get_passport_type(x: str):
-        return {'user': PassportType.USER, 'phone': PassportType.PHONE, 'email': PassportType.EMAIL}[x]
+        return {'user': PassportType.USER, 'phone': PassportType.PHONE, 'email': PassportType.EMAIL}.get(x, None)
+
+
+    @staticmethod
+    def get_all_types():
+        return [PassportType.USER, PassportType.PHONE, PassportType.EMAIL]
 
 
 class PassportEncoder(list):

@@ -1,27 +1,34 @@
 {
     "status": "not_sure",
-    "information":{
-        "author" : "evi1m0",
-        "create_date" : "2015/03/12",
-        "name" : "驴妈妈旅行网",
-        "website" : "http://www.lvmama.com/",
-        "category" : "旅游",
-        "icon" : "http://pic.lvmama.com/img/logo/lv_logo.png",
-        "desc" : "驴妈妈旅游网-中国最领先的在线旅游预订服务商,为您提供景点门票/国内自助游线路/出境游/酒店预订等旅游产品."
+    "information": {
+        "author": "evi1m0",
+        "create_date": "2015/03/12",
+        "name": "驴妈妈旅行网",
+        "website": "http://www.lvmama.com/",
+        "category": "旅游",
+        "icon": "http://pic.lvmama.com/img/logo/lv_logo.png",
+        "desc": "驴妈妈旅游网-中国最领先的在线旅游预订服务商,为您提供景点门票/国内自助游线路/出境游/酒店预订等旅游产品."
     },
-
-    "request" :{
-        "phone_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
-        "email_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
-        "user_url" : "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
-        "method" : "POST",
-        "post_fields":{
-            "email" : ""
+    "email": {
+        "url": "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
+        "method": "POST",
+        "post_fields": {
+            "email": ""
+        },
+        "judge": {
+            "judge_yes_keyword": "\"success\":false",
+            "judge_no_keyword": "\"success\":true"
         }
     },
-
-    "judge":{
-        "judge_yes_keyword" : "\"success\":false",
-        "judge_no_keyword" : "\"success\":true"
+    "phone": {
+        "url": "http://login.lvmama.com/nsso/ajax/checkUniqueField.do",
+        "method": "POST",
+        "post_fields": {
+            "mobile": ""
+        },
+        "judge": {
+            "judge_yes_keyword": "\"success\":false",
+            "judge_no_keyword": "\"success\":true"
+        }
     }
 }

@@ -13,7 +13,7 @@
         "desc": "艺龙旅行网 (NASDAQ: LONG)是中国领先的在线住宿服务提供商之一,致力于为消费者打造专注专业、物超所值、智能便捷的住宿预订平台"
     },
     "request": {
-        "phone_url": "https://secure.elong.com/passport/isajax/Register/ValidateMobileOrEmail?mobile={}",
+        "phone_url": "https://secure.elong.com/passport/isajax/Register/ValidateMobileOrEmail?mobile={passport}",
         "method": "GET"
     },
     "judge": {

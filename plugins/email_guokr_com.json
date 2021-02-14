@@ -14,7 +14,7 @@
         "desc": "果壳网是一个泛科技主题网站,提供负责任、有智趣、贴近生活的内容,你可以在这里阅读、分享、交流、提问。"
     },
     "request": {
-        "email_url": "https://account.guokr.com/apis/auth/email.json?retrieve_type=is_available&email={}",
+        "email_url": "https://account.guokr.com/apis/auth/email.json?retrieve_type=is_available&email={passport}",
         "method": "GET"
     },
     "judge": {

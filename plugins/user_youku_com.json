@@ -13,7 +13,7 @@
         "desc": "优酷是中国领先的视频分享网站，由古永锵在2006年6月21日创立。"
     },
     "request": {
-        "user_url": "http://login.youku.com/user/check?passport={}",
+        "user_url": "http://login.youku.com/user/check?passport={passport}",
         "method": "GET"
     },
     "judge": {
