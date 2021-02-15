@@ -19,7 +19,7 @@
             "stage": "3"
         },
         "judge": {
-            "judge_yes_keyword": "不能注册",
+            "judge_yes_keyword": "帐号已存在",
             "judge_no_keyword": "OK"
         }
     }

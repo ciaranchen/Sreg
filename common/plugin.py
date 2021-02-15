@@ -71,12 +71,10 @@ class Plugin(object):
 
 
     def do_get(self, url, headers={}):
-        headers.update(self.headers)
         return self.session.get(url, headers=headers, timeout=8, cookies=self.cookies)
 
 
     def do_post(self, url, data={}, headers={}):
-        headers.update(self.headers)
         return self.session.post(url, data=data, headers=headers, timeout=8, cookies=self.cookies)
 
 
@@ -128,10 +126,10 @@ class JsonPlugin(Plugin):
             method = block['method']
             url = block["url"]
             if method == 'GET':
-                res = self.do_get(url)
+                res = self.do_get(url, self.headers)
                 self.cookies = res.cookies
             elif method == 'POST':
-                res = self.do_post(url)
+                res = self.do_post(url, self.headers)
                 self.cookies = res.cookies
 
             if 'export' in block:
@@ -151,13 +149,17 @@ class JsonPlugin(Plugin):
 
         # do a check
         if request['method'] == "GET":
-            resp = self.do_get(url).text
+            resp = self.do_get(url, headers=req_headers).text
         elif request['method'] == "POST":
             post_data = request['post_fields']
             for k in post_data:
                 if isinstance(post_data[k], str):
                     post_data[k] = post_data[k].format(**data)
-            resp = self.do_post(url, data=post_data).text
+            resp = self.do_post(url, data=post_data, headers=req_headers).text
+
+        if self.status == PluginStatus.DEBUG:
+            print(self.meta_info.name)
+            print(resp)
         return resp
 
 

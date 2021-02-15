@@ -36,4 +36,4 @@ class PassportEncoder(list):
         passport_types = [PassportType.USER, PassportType.PHONE, PassportType.EMAIL]
         passports = {ti: [p for t, p in self if t == ti] for ti in passport_types}
         msg = ['[+] ' + PassportType.get_string(ti).capitalize() + ' Checking: ' + ', '.join(passports[ti]) for ti in passport_types if len(passports[ti]) > 0]
-        return '\n' + '\n'.join(msg)
+        return '\n' + '\n'.join(msg) + '\n'

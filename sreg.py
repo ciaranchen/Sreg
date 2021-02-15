@@ -31,7 +31,7 @@ class Sreg(object):
 
         print(inGreen(banner))
         print('[*] App: Search Registration')
-        print('[*] Version: V1.2(20191209)')
+        print('[*] Version: V2.0(2021-02-15)')
         print('[*] Maintainer: ciaranchen\n')
 
 
@@ -88,9 +88,9 @@ class Sreg(object):
         try:
             res = plug.check(t, p)
             if res:
-                print(inGreen('[+] %s: %s Registered' % (plug.meta_info.name, p)))
+                print(inGreen('[+] %s(%s): %s Registered' % (plug, plug.meta_info.website, p)))
             else:
-                print('[+] %s: %s ' % (plug, p) + inYellow('Not') + ' Registered')
+                print('[+] %s(%s): %s ' % (plug, plug.meta_info.website, p) + inYellow('Not') + ' Registered')
             self.res.append((plug, t, p, res))
             return res
         except Exception as e:
@@ -137,9 +137,9 @@ def main(Sreg=Sreg):
     parser.add_argument("-u", action="store", dest="user")
     parser.add_argument("-e", action="store", dest="email")
     parser.add_argument("-c", action="store", dest="cellphone")
-    parser.add_argument("-l", "--list", action="store_true", dest="list_data")
-    parser.add_argument('--list-all', action="store_true", dest="list_all")
-    parser.add_argument('--no-html', action="store_true", dest="nohtml")
+    parser.add_argument("-l", "--list", action="store_true", dest="list_data", help="列出对应凭证会检查的插件")
+    parser.add_argument('--list-all', action="store_true", dest="list_all", help="显示所有插件")
+    parser.add_argument('--no-html', action="store_true", dest="nohtml", help="不输出html文件")
     parser_argument = parser.parse_args()
 
     if parser_argument.list_all:

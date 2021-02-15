@@ -88,9 +88,9 @@ class Sreg_Debug(Sreg):
 
 
 if __name__ == '__main__':
-    sreg = Sreg_Debug(silence=True)
-    sreg.transfer()
+    # sreg = Sreg_Debug(silence=True)
+    # sreg.transfer()
 
-    # main(Sreg=Sreg_Debug)
+    main(Sreg=Sreg_Debug)
 
     # xpath_test()
