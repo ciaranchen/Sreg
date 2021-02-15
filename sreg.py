@@ -9,7 +9,7 @@ import threading
 from common.passport import PassportEncoder, PassportType
 from common.plugin import JsonPlugin2 as JsonPlugin, PluginStatus
 from common.color import *
-from common.output import SimpleEncoder as OutputEncoder
+from common.output import HtmlEncoder as OutputEncoder
 
 
 # Sreg 应该是所有plugin组合后的类
@@ -124,6 +124,13 @@ class Sreg(object):
         # print(all_categories)
 
 
+    def output(self):
+        encoder = OutputEncoder()
+        for t, p in self.passports:
+            res = [r for r in self.res if r[1] == t and r[2] == p]
+            encoder.add_passport(PassportType.get_string(t), p, res)
+
+
 def main(Sreg=Sreg):
     parser = argparse.ArgumentParser(
         description="Check how many Platforms the User registered.")
@@ -132,6 +139,7 @@ def main(Sreg=Sreg):
     parser.add_argument("-c", action="store", dest="cellphone")
     parser.add_argument("-l", "--list", action="store_true", dest="list_data")
     parser.add_argument('--list-all', action="store_true", dest="list_all")
+    parser.add_argument('--no-html', action="store_true", dest="nohtml")
     parser_argument = parser.parse_args()
 
     if parser_argument.list_all:
@@ -160,7 +168,8 @@ def main(Sreg=Sreg):
 
     # print(sreg.run_checks())
     sreg.check_parallel()
-    # TODO: generate check report.
+    if not parser_argument.nohtml:
+        sreg.output()
 
 
 if __name__ == '__main__':

@@ -168,6 +168,7 @@ class JsonPlugin(Plugin):
             return False
         if 'judge_yes_keyword' in judge_block and 'judge_no_keyword' in judge_block:
             raise RuntimeError('Plugin check failed.')
+        return False
 
 
 class JsonPlugin2(JsonPlugin):
