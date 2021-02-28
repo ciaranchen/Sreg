@@ -107,6 +107,7 @@ class JsonPlugin(Plugin):
 
 
     def check(self, _type, passport):
+        passport = urllib.parse.quote(passport)
         passport_type = PassportType.get_string(_type)
         format_data = {
             'passport': passport,
@@ -187,6 +188,7 @@ class JsonPlugin2(JsonPlugin):
         if 'request' in self.content:
             return super().check(_type, passport)
         else:
+            passport = urllib.parse.quote(passport)
             passport_type = PassportType.get_string(_type)
             format_data = {
                 'passport': passport,

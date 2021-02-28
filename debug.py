@@ -61,7 +61,7 @@ class Sreg_Debug(Sreg):
             if os.path.basename(p_obj.filename) == filename:
                 continue
             filepath = os.path.join(plug_path, filename)
-            with open(filepath, 'w', encoding='utf8') as fp:
+            with open(filepath, 'w', encoding='utf-8') as fp:
                 json.dump(plugs[p], fp, indent=4, ensure_ascii=False)
         print(not_trans)
 
